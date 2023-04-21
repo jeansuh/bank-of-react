@@ -73,6 +73,15 @@ class App extends Component {
     this.fetchData();
   }
 
+  //update credit/debit list and account balance from the child components
+  updateCredits = (creditInfo, balanceInfo) => {
+    this.setState({creditList: creditInfo, accountBalance: balanceInfo});
+  }
+
+  updateDebits = (debitInfo, balanceInfo) => {
+    this.setState({debitList: debitInfo, accountBalance: balanceInfo});
+  }
+
   // Create Routes and React elements to be rendered using React components
   render() {  
     // Create React elements and pass input props to components
@@ -81,8 +90,8 @@ class App extends Component {
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
     )
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />)
-    const CreditsComponent = () => (<Credits credits={this.state.creditList} />) 
-    const DebitsComponent = () => (<Debits debits={this.state.debitList} />) 
+    const CreditsComponent = () => (<Credits accountBalance = {this.state.accountBalance} creditList={this.state.creditList} updateCredits={this.updateCredits} />) 
+    const DebitsComponent = () => (<Debits accountBalance = {this.state.accountBalance} debitList={this.state.debitList} updateDebits={this.updateDebits} />) 
 
     // Important: Include the "basename" in Router, which is needed for deploying the React app to GitHub Pages
     return (
