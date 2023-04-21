@@ -35,11 +35,27 @@ class App extends Component {
     this.setState({currentUser: newUser})
   }
 
+  //updates balance after fetching API data
+  updateBalance(){
+    var subtract = 0;
+    var add = 0;
+    this.state.creditList.forEach((credit) => {
+      subtract = subtract + credit.amount;
+      console.log(subtract);
+    })
+    this.state.debitList.forEach((debit) => {
+      add = add + debit.amount;
+      console.log(add);
+    })
+    this.setState({accountBalance:(subtract - add).toFixed(2)}, () => console.log(this.state.accountBalance));
+  }
+
+  //makes an API request and updates state
   fetchData(){
     Promise.all([fetch("https://johnnylaicode.github.io/api/credits.json"),
     fetch("https://johnnylaicode.github.io/api/debits.json")])
       .then(([r1, r2]) => {
-        return Promise.all([r1.json(),r2.json()]);
+        return Promise.all([r1.json(),r2.json()]); //saves as json format
       })
       .then(([r1,r2]) => {
         this.setState({
@@ -47,7 +63,7 @@ class App extends Component {
           debitList: r2,
         }, () => {
           console.log(this.state.creditList , this.state.debitList);
-          // this.updateBalance();
+          this.updateBalance(); //calls for function to update accountBalance with new credit and debit info
         })
       })
   }
