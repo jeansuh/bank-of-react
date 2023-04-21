@@ -19,11 +19,13 @@ class Credits extends Component {
     }
   }
 
+  //when the input is changed, captures it and updates states
   handleChange = (e, type) => {
     this.setState({...this.state, [type]: e.target.value}); 
     console.log(e.target.value);
   }
 
+  // Render the list of Credit items and a form to input new Credit item
   render() {
     return (
         <div>
