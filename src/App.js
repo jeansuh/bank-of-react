@@ -38,9 +38,9 @@ class App extends Component {
   mockLogIn = (logInInfo) => {  
     const newUser = {...this.state.currentUser};
     newUser.userName = logInInfo.userName;
-    this.setState({currentUser: newUser})
     this.setState(initialState);
     this.updateBalance();
+    this.setState({currentUser: newUser});
   }
 
   //updates balance after fetching API data
