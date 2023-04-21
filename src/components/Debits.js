@@ -24,6 +24,34 @@ class Debits extends Component {
     console.log(e.target.value);
   }
 
+  //When submitted, stores data to this state and updates parent component's state
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { debitList, accountBalance, description, amount} = this.state;
+
+    //defines variable to update date and converts it from data object to string
+    var newDate = new Date().toISOString();
+    //defines variable to update accountBalance with
+    var newBalance = (Number(accountBalance) - Number(amount)).toFixed(2);
+    //defines variable to update id with by incrementing the id of the last object
+    var newId = debitList[debitList.length-1].id + 1;
+
+    //updates states
+    this.setState({
+      debitList : [...debitList, {
+        id:newId,
+        description,
+        amount,
+        date:newDate
+      }],
+      accountBalance:newBalance,
+    }, () => {
+      console.log(this.state); 
+      //updates parent component's state
+      this.props.updateDebits(this.state.debitList, this.state.accountBalance);
+    });
+  }
+
   // Render the list of Debit items and a form to input new Debit item
   render() {
     const { debitList, accountBalance } = this.state;
