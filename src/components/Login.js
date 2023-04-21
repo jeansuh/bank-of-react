@@ -30,8 +30,9 @@ class LogIn extends Component {
 
   // When user clicked "Log In" button, store user data and then redirect to "User Profile" page
   handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.mockLogIn(this.state.user)  // Update state in the top-level component (App.js)
+    e.preventDefault();
+    console.log('submitted');
+    this.props.mockLogIn(this.state.user);  // Update state in the top-level component (App.js)
     this.setState({redirect: true})  // Update state to trigger Redirect
   }
   

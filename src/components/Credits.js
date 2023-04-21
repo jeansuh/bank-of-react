@@ -7,6 +7,7 @@ Note: You need to work on this file for the Assignment.
 import {Link} from 'react-router-dom';
 import React, { Component } from 'react';
 
+
 class Credits extends Component {
   constructor (props) {
     super(props);
@@ -55,6 +56,7 @@ class Credits extends Component {
 
   // Render the list of Credit items and a form to input new Credit item
   render() {
+    const { creditList, accountBalance } = this.state;
     return (
         <div>
           <h1>Credits</h1>

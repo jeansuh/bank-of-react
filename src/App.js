@@ -14,6 +14,12 @@ import LogIn from './components/Login';
 import Credits from './components/Credits';
 import Debits from './components/Debits';
 
+let initialState={
+  accountBalance:1234567.89,
+  creditList:[],
+  debitList:[]
+};
+
 class App extends Component {
   constructor() {  // Create and initialize state
     super(); 
@@ -33,6 +39,8 @@ class App extends Component {
     const newUser = {...this.state.currentUser};
     newUser.userName = logInInfo.userName;
     this.setState({currentUser: newUser})
+    this.setState(initialState);
+    this.updateBalance();
   }
 
   //updates balance after fetching API data
@@ -63,6 +71,7 @@ class App extends Component {
           debitList: r2,
         }, () => {
           console.log(this.state.creditList , this.state.debitList);
+          initialState = this.state;
           this.updateBalance(); //calls for function to update accountBalance with new credit and debit info
         })
       })
@@ -89,7 +98,7 @@ class App extends Component {
     const UserProfileComponent = () => (
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
     )
-    const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />)
+    const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} updateCredits={this.updateCredits} updateDebits={this.updateDebits} />)
     const CreditsComponent = () => (<Credits accountBalance = {this.state.accountBalance} creditList={this.state.creditList} updateCredits={this.updateCredits} />) 
     const DebitsComponent = () => (<Debits accountBalance = {this.state.accountBalance} debitList={this.state.debitList} updateDebits={this.updateDebits} />) 
 
