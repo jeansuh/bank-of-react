@@ -18,9 +18,30 @@ class Debits extends Component {
     }
   }
 
+  //when the input is changed, captures it and updates states
+  handleChange = (e, type) => {
+    this.setState({...this.state, [type]: e.target.value}); 
+    console.log(e.target.value);
+  }
+
+  // Render the list of Debit items and a form to input new Debit item
   render() {
+    const { debitList, accountBalance } = this.state;
     return(
-      <div>Debits</div>
+      <div>
+          <h1>Debits</h1>
+          <ul>
+            {debitList.map((debit) =>
+              <li style={{listStyle:'none'}}>{`${debit.description} : ${debit.amount} ${debit.date.slice(0,10)}`} </li>)}
+          </ul>
+          <div>Account balance : {`${accountBalance}`}</div>
+          <form onSubmit={this.handleSubmit}>
+              <input type="text" value={this.state.description} onChange={(e) => {this.handleChange(e, "description")}} ref="description" />
+              <input type="text" value={this.state.amount} onChange={(e) => {this.handleChange(e, "amount")}} ref="amount" />
+            <button>Add Debit</button>
+          </form>
+          <Link to='/'>Return to Home</Link>
+      </div>
     )
   }
 
