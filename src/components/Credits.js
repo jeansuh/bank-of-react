@@ -25,6 +25,34 @@ class Credits extends Component {
     console.log(e.target.value);
   }
 
+  //When submitted, stores data to this state and updates parent component's state
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { creditList, accountBalance, description, amount} = this.state; //initializes states
+
+    //defines variable to update date and converts it from data object to string
+    var newDate = new Date().toISOString(); 
+    //defines variable to update accountBalance with
+    var newBalance = (Number(accountBalance) + Number(amount)).toFixed(2);
+    //defines variable to update id with by incrementing the id of the last object
+    var newId = creditList[creditList.length-1].id + 1;
+
+    //updates states
+    this.setState({
+      creditList : [...creditList, {
+        id:newId,
+        description,
+        amount,
+        date: newDate
+      }],
+      accountBalance:newBalance,
+    }, () => {
+      console.log(this.state); 
+      //updates parent component's state
+      this.props.updateCredits(this.state.creditList, this.state.accountBalance);
+    });
+  }
+
   // Render the list of Credit items and a form to input new Credit item
   render() {
     return (
@@ -44,7 +72,6 @@ class Credits extends Component {
         </div>
     )
   }
-
 }
 
 export default Credits;
